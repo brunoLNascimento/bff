@@ -1,0 +1,30 @@
+{
+  "name": "bff",
+  "version": "1.0.0",
+  "description": "api BFF",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "body-parse": "^0.1.0",
+    "express": "^4.17.1",
+    "express-load": "^1.1.16",
+    "mongo": "^0.1.0",
+    "mongod": "^2.0.0",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.11.12"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brunoLNascimento/bff.git"
+  },
+  "author": "Bruno Lima do Nascimento",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brunoLNascimento/bff/issues"
+  },
+  "homepage": "https://github.com/brunoLNascimento/bff#readme"
+}
