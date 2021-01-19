@@ -6,12 +6,9 @@
   "dependencies": {
     "axios": "^0.21.1",
     "body-parse": "^0.1.0",
+    "consign": "^0.1.6",
     "express": "^4.17.1",
-    "express-load": "^1.1.16",
-    "mongo": "^0.1.0",
-    "mongod": "^2.0.0",
-    "mongodb": "^3.6.3",
-    "mongoose": "^5.11.12"
+    "express-load": "^1.1.16"
   },
   "devDependencies": {},
   "scripts": {
