@@ -10,7 +10,7 @@ module.exports = {
             else
                 return response;
         }).catch( error => {
-            return error;
+            return (error.response) ? error.response : error;
         })
     },
 

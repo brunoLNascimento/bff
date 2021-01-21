@@ -8,9 +8,8 @@ module.exports = {
             let pokemon = await servicePokemon.find(findBy);
             return res.status(200).send(pokemon)
         } catch (error) {
-            let dto = error;
-            dto.status = 400;
-            return res.status(dto.status).send(dto.error)
+            console.log(error)
+            return res.status(400).send(error)
         }
     }
 }

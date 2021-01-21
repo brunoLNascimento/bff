@@ -19,39 +19,38 @@ module.exports = {
 
 async function findPokemonApi(pokemon){
     try {
+        let type = [];
+        let param = {};
         let url = urlBy.findPokemon + pokemon;
         let found = await genericGet(url, timeout.time);
-        let type = [];
+       
+        if(found.status) 
+            throw `Erro ao consultar Pokemon ${pokemon}`
+        
         found.types.forEach(element => {
             let types ={
                 name: element.type.name,
                 color:""
             }  
-
-
             type.push(types)
         });
-        let param = { 
+
+        return param = { 
             name: found.name,
             id: found.id,
             type: type
-        }
-        return param;
+        };
     } catch (error) {
-        throw error
+        throw error;
     };
 };
 
 async function findPokemonDB(pokemon){
     try {
         let url = urlBy.apiCollor + pokemon;
-        let found =await genericGet(url, timeout.time);
-        if (found.length) 
-            return found;
-        else
-            return false;
+        return await genericGet(url, timeout.time);
     } catch (error) {
-        console.log("Erro ao consultar banco de dados: " + error);
+        throw error;
     };
 };
 
@@ -59,11 +58,11 @@ async function findCollorPokemon(body){
     try {
         let url = urlBy.getCollor;
         let foundPokemonDB = await genericPost(url, body, timeout.time);
-        if(foundPokemonDB) 
-            return foundPokemonDB;
-        else
-            return false;
+        if(!foundPokemonDB.length) 
+            throw "Error ao consultar cor do pokemon!";
+      
+        return foundPokemonDB;
     } catch (error) {
-        console.log("Erro ao consultar banco de dados: " + error);
+        throw error;
     };
 };
