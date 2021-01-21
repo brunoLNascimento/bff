@@ -8,7 +8,20 @@ module.exports = {
             if(response.data)
                 return response.data;
             else
-                return response;//ver como vai ficar o retorno da api collor
+                return response;
+        }).catch( error => {
+            return error;
+        })
+    },
+
+    async genericPost(url, body, timeout){
+        return await axios.post(url, body, {
+            timeout: timeout,
+        }).then( response => {
+            if(response.data)
+                return response.data;
+            else
+                return response;
         }).catch( error => {
             return error;
         })

@@ -1,12 +1,12 @@
 const { urlBy, timeout} = require('../config/url_config')
-const { genericGet } = require('./service')
+const { genericGet, genericPost } = require('./service')
 
 
 module.exports = {
     async find(pokemon){
         try {
             let foundPokemonDB = await findPokemonDB(pokemon);
-            if (foundPokemonDB) return foundPokemonDB;
+            if (foundPokemonDB.length) return foundPokemonDB;
             
             let foundPokemonApi = await findPokemonApi(pokemon);
             let foundCollor = await findCollorPokemon(foundPokemonApi);
@@ -21,7 +21,22 @@ async function findPokemonApi(pokemon){
     try {
         let url = urlBy.findPokemon + pokemon;
         let found = await genericGet(url, timeout.time);
-        return found;
+        let type = [];
+        found.types.forEach(element => {
+            let types ={
+                name: element.type.name,
+                color:""
+            }  
+
+
+            type.push(types)
+        });
+        let param = { 
+            name: found.name,
+            id: found.id,
+            type: type
+        }
+        return param;
     } catch (error) {
         throw error
     };
@@ -30,24 +45,24 @@ async function findPokemonApi(pokemon){
 async function findPokemonDB(pokemon){
     try {
         let url = urlBy.apiCollor + pokemon;
-        let foundPokemonDB = await genericGet(url, timeout.time);
-        if(foundPokemonDB) 
-            return foundPokemonDB;
+        let found =await genericGet(url, timeout.time);
+        if (found.length) 
+            return found;
         else
-            return false;//false tem que sair, acho que dá pra deixar apenas o foundPokemonDB
+            return false;
     } catch (error) {
         console.log("Erro ao consultar banco de dados: " + error);
     };
 };
 
-async function findCollorPokemon(pokemon){ //deverá encaminhar o id e nome do pokemon, para salvar no base
+async function findCollorPokemon(body){
     try {
-        let url = urlBy.getCollor + pokemon;
-        let foundPokemonDB = await genericGet(url, timeout.time);
+        let url = urlBy.getCollor;
+        let foundPokemonDB = await genericPost(url, body, timeout.time);
         if(foundPokemonDB) 
             return foundPokemonDB;
         else
-            return false;//false tem que sair, acho que dá pra deixar apenas o foundPokemonDB
+            return false;
     } catch (error) {
         console.log("Erro ao consultar banco de dados: " + error);
     };
