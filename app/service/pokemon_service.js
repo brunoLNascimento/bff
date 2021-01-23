@@ -3,7 +3,7 @@ const { genericGet, genericPost } = require('./service')
 
 
 module.exports = {
-    async find(pokemon){
+    async findBy(pokemon){
         try {
             let foundPokemonDB = await findPokemonDB(pokemon);
             if (foundPokemonDB.length) return foundPokemonDB;
@@ -14,6 +14,14 @@ module.exports = {
         } catch (error) {
             throw error;
         };
+    },
+
+    async find(page){
+        try {
+            return await findAllPokemonDB(page);
+        } catch (error) {
+            throw error;
+        }
     }
 };
 
@@ -62,6 +70,17 @@ async function findCollorPokemon(body){
             throw "Error ao consultar cor do pokemon!";
       
         return foundPokemonDB;
+    } catch (error) {
+        throw error;
+    };
+};
+
+async function findAllPokemonDB(page){
+    try {
+        let url = urlBy.apiCollorAll + page;
+        let found = await genericGet(url, timeout.time);
+        if(found.length) return found;
+        else throw "teste"
     } catch (error) {
         throw error;
     };
