@@ -80,7 +80,8 @@ async function findAllPokemonDB(page){
         let url = urlBy.apiCollorAll + page;
         let found = await genericGet(url, timeout.time);
         if(found.length) return found;
-        else throw "teste"
+        else if(!found.length) return "Nenhum resultado encontrado para busca na página: " + page;
+        else throw "Erro ao consultar Pokemons na base!"
     } catch (error) {
         throw error;
     };
