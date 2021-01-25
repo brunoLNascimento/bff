@@ -1,0 +1,86 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": ""
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {},
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/findBy/{pokemon}": {
+      "get": {
+        "tags": [
+          "findByPokemon"
+        ],
+        "description": "Endpoint para encontrar um pokemon na api (pokeapi) ou na base(caso tenha sido procurado antes), em seguida é enviado para a apiColor, lá irá salvar na base",
+        "parameters": [
+          {
+            "name": "pokemon",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "description": "Nome do pokemon.",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "description": "ID do pokemon.",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/find/{page?}": {
+      "get": {
+        "tags": [
+          "findAllPokemon"
+        ],
+        "description": "Endpoint para buscar todos os Pokemon na base (consulta apiColor), limite de resultado por página 10",
+        "parameters": [
+          {
+            "name": "page?",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": "Não obrigatório, caso não seja enviado nenhum número: setado página 0",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {}
+}
