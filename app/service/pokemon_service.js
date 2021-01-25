@@ -1,12 +1,12 @@
 const { urlBy, timeout} = require('../config/url_config')
-const { genericGet } = require('./service')
+const { genericGet, genericPost } = require('./service')
 
 
 module.exports = {
-    async find(pokemon){
+    async findBy(pokemon){
         try {
             let foundPokemonDB = await findPokemonDB(pokemon);
-            if (foundPokemonDB) return foundPokemonDB;
+            if (foundPokemonDB.length) return foundPokemonDB;
             
             let foundPokemonApi = await findPokemonApi(pokemon);
             let foundCollor = await findCollorPokemon(foundPokemonApi);
@@ -14,41 +14,75 @@ module.exports = {
         } catch (error) {
             throw error;
         };
+    },
+
+    async find(page){
+        try {
+            return await findAllPokemonDB(page);
+        } catch (error) {
+            throw error;
+        }
     }
 };
 
 async function findPokemonApi(pokemon){
     try {
+        let type = [];
+        let param = {};
         let url = urlBy.findPokemon + pokemon;
         let found = await genericGet(url, timeout.time);
-        return found;
+       
+        if(found.status) 
+            throw `Erro ao consultar Pokemon ${pokemon}`
+        
+        found.types.forEach(element => {
+            let types ={
+                name: element.type.name,
+                color:""
+            }  
+            type.push(types)
+        });
+
+        return param = { 
+            name: found.name,
+            id: found.id,
+            type: type
+        };
     } catch (error) {
-        throw error
+        throw error;
     };
 };
 
 async function findPokemonDB(pokemon){
     try {
         let url = urlBy.apiCollor + pokemon;
-        let foundPokemonDB = await genericGet(url, timeout.time);
-        if(foundPokemonDB) 
-            return foundPokemonDB;
-        else
-            return false;//false tem que sair, acho que dá pra deixar apenas o foundPokemonDB
+        return await genericGet(url, timeout.time);
     } catch (error) {
-        console.log("Erro ao consultar banco de dados: " + error);
+        throw error;
     };
 };
 
-async function findCollorPokemon(pokemon){ //deverá encaminhar o id e nome do pokemon, para salvar no base
+async function findCollorPokemon(body){
     try {
-        let url = urlBy.getCollor + pokemon;
-        let foundPokemonDB = await genericGet(url, timeout.time);
-        if(foundPokemonDB) 
-            return foundPokemonDB;
-        else
-            return false;//false tem que sair, acho que dá pra deixar apenas o foundPokemonDB
+        let url = urlBy.getCollor;
+        let foundPokemonDB = await genericPost(url, body, timeout.time);
+        if(!foundPokemonDB.length) 
+            throw "Error ao consultar cor do pokemon!";
+      
+        return foundPokemonDB;
     } catch (error) {
-        console.log("Erro ao consultar banco de dados: " + error);
+        throw error;
+    };
+};
+
+async function findAllPokemonDB(page){
+    try {
+        let url = urlBy.apiCollorAll + page;
+        let found = await genericGet(url, timeout.time);
+        if(found.length) return found;
+        else if(!found.length) return "Nenhum resultado encontrado para busca na página: " + page;
+        else throw "Erro ao consultar Pokemons na base!"
+    } catch (error) {
+        throw error;
     };
 };
