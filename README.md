@@ -1,7 +1,6 @@
 # Objetivo
 Retornar uma listagem de Pokémons e seus tipos, e para cada tipo um hexadecimal de cor correspondente.
 Exemplo:
-
 No código
 Essa API irá se comunicar com duas outras, uma interna, que você também desenvolverá, e outra externa, a PokéAPI. Essa sua primeira aplicação terá a função de unir e processar os dados de ambas as APIs para gerar uma resposta consolidada quando for chamada.
 
