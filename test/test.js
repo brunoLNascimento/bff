@@ -16,7 +16,7 @@ const idInexistente = {
 describe('Testando api bff', () => {
     setTimeout( function () {
         process.exit()
-      }, 2000);
+      }, 10000);
       
     it(`#Consultando Pokemon pelo nome ${bulbasaur.name}`, done => {
         request(app)
