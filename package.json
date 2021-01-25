@@ -9,11 +9,12 @@
     "consign": "^0.1.6",
     "express": "^4.17.1",
     "express-load": "^1.1.16",
+    "mocha": "^8.2.1",
     "nodemon": "^2.0.7"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --timeout 30000 test/**/*.js",
     "start": "nodemon server.js"
   },
   "repository": {
